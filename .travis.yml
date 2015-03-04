@@ -1,6 +1,5 @@
 language: java
 jdk:
   - oraclejdk8
-script: mvn
 before_install: mvn install -DskipTests=true -DfinalNameTest_NavEspn
 install: mvn test

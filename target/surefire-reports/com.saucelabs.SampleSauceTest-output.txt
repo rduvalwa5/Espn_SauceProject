@@ -1,0 +1,2 @@
+SauceOnDemandSessionID=6eada6eeacb54b068e713a0c8e5e36f4 job-name=com.saucelabs.SampleSauceTest.amazon[1]
+SauceOnDemandSessionID=2c4bb26414104d74b5de5a4bce70e545 job-name=com.saucelabs.SampleSauceTest.amazon[0]

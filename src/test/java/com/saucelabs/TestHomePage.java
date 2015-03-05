@@ -3,9 +3,7 @@ package com.saucelabs;
 import static org.junit.Assert.assertEquals;
 import org.openqa.selenium.WebDriver;
 
-public class TestHomePage {
-	private String homeTitle = "ESPN: The Worldwide Leader In Sports";
-	
+public class TestHomePage extends PageObjects{
 	public Boolean getPage(WebDriver driver, String url) throws InterruptedException{
 		Boolean foundPage = false;
 		driver.get(url);

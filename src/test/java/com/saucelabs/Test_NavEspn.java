@@ -58,15 +58,14 @@ public class Test_NavEspn {
 	     * @param browser
 	     * @return 
 	     */
-	    public void SampleSauceTest(String os, String version, String browser) 
+/*	    public void SampleSauceTest(String os, String version, String browser) 
 	    {	//super();
 	        os = os;
 	        version = version;
 	        browser = browser;
 	    }
 	    
-/*
- *     @ConcurrentParameterized.Parameters
+      @ConcurrentParameterized.Parameters
         public static LinkedList browsersStrings() {
         LinkedList browsers = new LinkedList();
         browsers.add(new String[]{"Windows 8.1", "11", "internet explorer"});
@@ -75,9 +74,6 @@ public class Test_NavEspn {
     }	    
  */
 	    
-	    
-	    
-	    
 	    /**
 	     * Constructs a new {@link RemoteWebDriver} instance which is configured to use the capabilities defined by the {@link #browser},
 	     * {@link #version} and {@link #os} instance variables, and which is configured to run against ondemand.saucelabs.com, using
@@ -85,30 +81,34 @@ public class Test_NavEspn {
 	     *
 	     * @throws Exception if an error occurs during the creation of the {@link RemoteWebDriver} instance.
 	     */
+	  
+
+	/* Links on capabilities
+	 * https://code.google.com/p/selenium/wiki/DesiredCapabilities
+	 * http://www.browserstack.com/automate/capabilities
+	 */
+
 	    @Before
 	    public void setUp() throws Exception {
 
 	        DesiredCapabilities capabilities = new DesiredCapabilities();
-	        capabilities.setCapability(CapabilityType.BROWSER_NAME, "firefox");
-	        capabilities.setCapability(CapabilityType.VERSION, "35");
-//	        capabilities.setCapability(CapabilityType.PLATFORM, "mac");
-	        capabilities.setCapability(CapabilityType.PLATFORM,"Windows 8.1");
-	        capabilities.setCapability("name", "EspnTest");
+	        capabilities.setCapability(CapabilityType.BROWSER_NAME, "safari");
+	        capabilities.setCapability(CapabilityType.PLATFORM, "mac");
+//	        capabilities.setCapability(CapabilityType.BROWSER_NAME, "firefox");
+//	        capabilities.setCapability(CapabilityType.VERSION, "35");
+//	        capabilities.setCapability(CapabilityType.PLATFORM,"Windows 8.1");
+//	        capabilities.setCapability(CapabilityType.PLATFORM,"Windows 7");
+//	        capabilities.setCapability(CapabilityType.PLATFORM,"Linux");	        
 	        capabilities.setCapability("name", "EspnTest");
 	        driver = new RemoteWebDriver(
 	                new URL("http://" + authentication.getUsername() + ":" + authentication.getAccessKey() + "@ondemand.saucelabs.com:80/wd/hub"),
 	                capabilities);
+	        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	        this.sessionId = (((RemoteWebDriver) driver).getSessionId()).toString();
 
 	    }
 
-
-		/* Links on capabilities
-		 * https://code.google.com/p/selenium/wiki/DesiredCapabilities
-		 * http://www.browserstack.com/automate/capabilities
-		 */
-
-/*	    
+/* simple style without sauce	    
 	  @Before
 	  public void setUp() throws Exception {
 	       DesiredCapabilities capabilities = new DesiredCapabilities();

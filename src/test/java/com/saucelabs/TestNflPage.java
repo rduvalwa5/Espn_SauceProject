@@ -4,9 +4,7 @@ import static org.junit.Assert.assertEquals;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class TestNflPage {
-	private String nflUrl = "http://espn.go.com/nfl/";
-	private String nflTitle = "NFL Football Teams, Scores, Stats, News, Standings, Rumors - National Football League - ESPN";
+public class TestNflPage  extends PageObjects {
 	
 	public Boolean getPage(WebDriver driver, String url) throws InterruptedException{
 		Boolean foundPage = false;

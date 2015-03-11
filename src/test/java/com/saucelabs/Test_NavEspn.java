@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.*;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
@@ -34,35 +35,39 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 
 
-import com.saucelabs.common.SauceOnDemandAuthentication;
-import com.saucelabs.junit.ConcurrentParameterized;
 
-public class Test_NavEspn {
+
+
+import com.saucelabs.common.SauceOnDemandAuthentication;
+import com.saucelabs.common.SauceOnDemandSessionIdProvider;
+import com.saucelabs.junit.ConcurrentParameterized;
+import com.saucelabs.junit.SauceOnDemandTestWatcher;
+
+
+@RunWith(ConcurrentParameterized.class)
+public class Test_NavEspn implements SauceOnDemandSessionIdProvider {
+	  public SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication("rduvalwa5", "81187483-1bfd-4635-87a6-7b90546396c9");
+	  @Rule
+	  public SauceOnDemandTestWatcher resultReportingTestWatcher = new SauceOnDemandTestWatcher(this, authentication);
+
+	  private String browser; //Name; // = "firefox"; //firefox, chrome, internet explorer, safari, opera, iPad, iPhone, android
+	  private String os; //Name; // =  "ANY"; 
+	  private String version; // = "35";
+	  private String sessionId;	
 	  private WebDriver driver;
-	  private String version = "35";
 	  private String baseUrl = "";
-	  private StringBuffer verificationErrors = new StringBuffer();
-	  private String browserName = "firefox"; //firefox, chrome, internet explorer, safari, opera, iPad, iPhone, android
-	  private String osName =  "ANY";          // MAC, WIN8, XP, WINDOWS, ANY, ANDROID
-//	  public SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication("rduvalXXXX", "XXX87483-1bfd-4635-87a6-7b90546396c9");
+//	  private StringBuffer verificationErrors = new StringBuffer();
+         // MAC, WIN8, XP, WINDOWS, ANY, ANDROID
 	  private TestHomePage myHome = new TestHomePage();
 	  private TestNflPage myNfl = new TestNflPage();	
-	  public SauceOnDemandAuthentication authentication = new SauceOnDemandAuthentication("rduvalwa5", "81187483-1bfd-4635-87a6-7b90546396c9");
-	  private String sessionId;	  
-	    /**
-	     * Constructs a new instance of the test.  The constructor requires three string parameters, which represent the operating
-	     * system, version and browser to be used when launching a Sauce VM.  The order of the parameters should be the same
-	     * as that of the elements within the {@link #browsersStrings()} method.
-	     * @param os
-	     * @param version
-	     * @param browser
-	     * @return 
-	     */
-/*	    public void SampleSauceTest(String os, String version, String browser) 
-	    {	//super();
-	        os = os;
-	        version = version;
-	        browser = browser;
+  
+
+	  public Test_NavEspn(String os, String version, String browser) 
+	    {	
+		  	super();
+	        this.os = os;
+	        this.version = version;
+	        this.browser = browser;
 	    }
 	    
       @ConcurrentParameterized.Parameters
@@ -70,24 +75,16 @@ public class Test_NavEspn {
         LinkedList browsers = new LinkedList();
         browsers.add(new String[]{"Windows 8.1", "11", "internet explorer"});
         browsers.add(new String[]{"OSX 10.8", "6", "safari"});
+        browsers.add(new String[]{"OSX 10.10", "8", "safari"});
+        browsers.add(new String[]{"Linux", "34", "firefox"});
         return browsers;
-    }	    
- */
-	    
-	    /**
-	     * Constructs a new {@link RemoteWebDriver} instance which is configured to use the capabilities defined by the {@link #browser},
-	     * {@link #version} and {@link #os} instance variables, and which is configured to run against ondemand.saucelabs.com, using
-	     * the username and access key populated by the {@link #authentication} instance.
-	     *
-	     * @throws Exception if an error occurs during the creation of the {@link RemoteWebDriver} instance.
-	     */
-	  
+    }	    	  
 
 	/* Links on capabilities
 	 * https://code.google.com/p/selenium/wiki/DesiredCapabilities
 	 * http://www.browserstack.com/automate/capabilities
 	 */
-
+/*
 	    @Before
 	    public void setUp() throws Exception {
 
@@ -107,19 +104,22 @@ public class Test_NavEspn {
 	        this.sessionId = (((RemoteWebDriver) driver).getSessionId()).toString();
 
 	    }
-
-/* simple style without sauce	    
+*/
 	  @Before
 	  public void setUp() throws Exception {
-	       DesiredCapabilities capabilities = new DesiredCapabilities();
-       capabilities.setCapability(CapabilityType.BROWSER_NAME, browserName );
-       capabilities.setCapability(CapabilityType.PLATFORM, osName);
-       capabilities.setCapability("name", "Test_NavEspn");
-       driver = new FirefoxDriver();
-       baseUrl = "http://espn.go.com/";
-       driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		  
+	        DesiredCapabilities capabilities = new DesiredCapabilities();
+	        capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
+	        if (version != null) {
+	            capabilities.setCapability(CapabilityType.VERSION, version);
+	        }
+	        capabilities.setCapability(CapabilityType.PLATFORM, os);
+	        capabilities.setCapability("name", "Sauce Sample Test");
+	        this.driver = new RemoteWebDriver(
+	                new URL("http://" + authentication.getUsername() + ":" + authentication.getAccessKey() + "@ondemand.saucelabs.com:80/wd/hub"),
+	                capabilities);
+	        this.sessionId = (((RemoteWebDriver) driver).getSessionId()).toString();
 	  }
-*/
 	  
 	  @Test
 	  public void testEspn() throws Exception {
